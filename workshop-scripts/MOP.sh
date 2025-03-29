@@ -433,4 +433,19 @@ skp apply -f example-resource.yaml
 
 skp get pods --selector kratix.io/promise-name=postgresql
 
+## Crossplane as a Service ##
+
+skw create secret generic aws-creds -n crossplane-system --from-file=creds=./aws-credentials.txt
+skw get secrets -A
+k apply -f provider-config.yaml 
+skw apply -f provider-config.yaml 
+skw -n crossplane-system get deployments
+skw get deployments
+skw get pods -A
+skw get crossplane
+skw apply -f provider-aws.yaml
+skw get crossplane
+skw get compositeresourcedefinitions
+skw get compositeresourcedefinitions -A
+
 
