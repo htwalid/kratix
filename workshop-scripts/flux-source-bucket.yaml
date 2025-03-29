@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minio-credentials
+  namespace: flux-system
+type: Opaque
+stringData:
+  accesskey: minioadmin
+  secretkey: minioadmin
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: Bucket
+metadata:
+  name: kratix
+  namespace: flux-system
+spec:
+  interval: 10s
+  provider: generic
+  bucketName: kratix
+  endpoint: 172.18.0.2:31337 # make sure to read the caution box above
+  insecure: true
+  secretRef:
+    name: minio-credentials

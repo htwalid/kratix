@@ -1,0 +1,25 @@
+apiVersion: platform.kratix.io/v1alpha1
+kind: Promise
+metadata:
+  creationTimestamp: null
+  name: crossplane
+  namespace: default
+spec:
+  workflows:
+    promise:
+      configure:
+        - apiVersion: platform.kratix.io/v1alpha1
+          kind: Pipeline
+          metadata:
+            name: promise-configure
+            namespace: default
+          spec:
+            containers:
+              - image: ghcr.io/syntasso/kratix-marketplace/crossplane-configure-pipeline:v0.1.0
+                name: crossplane-configure-pipeline
+                command: ["/bin/sh", "-c"]
+                args:
+                  - |
+                    kubectl crossplane install provider crossplane/provider-aws:v0.24.1
+    resource: {}
+status: {}
